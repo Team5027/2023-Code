@@ -14,10 +14,14 @@ import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kOff;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
 
+//Motor Methods
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-// camera methods
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
+//Camera Methods
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
@@ -33,7 +37,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 //import edu.wpi.first.wpilibj.DigitalInput;
 
-//controller
+//Controller
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -41,8 +45,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 //import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -163,20 +165,18 @@ try (MjpegServer mjpegServer2 = new MjpegServer("serve_Blur", 1182)) {
    leftFrontMotor.setNeutralMode(NeutralMode.Brake);
    rightFrontMotor.setNeutralMode(NeutralMode.Brake);
    leftRearMotor.setNeutralMode(NeutralMode.Brake);
-  rightRearMotor.setNeutralMode(NeutralMode.Brake);
+   rightRearMotor.setNeutralMode(NeutralMode.Brake);
  
     if (time - startTime <= 2) {
       leftSide.set(-0.4);
       rightSide.set(0.4);
+    } else if (time - startTime >= 4 && time - startTime <= 7){
+      leftSide.set(0.3);                                              
+      rightSide.set(-0.3);
+    } else {
+      leftSide.set(0);
+      rightSide.set(0);
     }
- else if (time - startTime >= 4 && time - startTime <= 7){
-  leftSide.set(0.3);                                              
-  rightSide.set(-0.3);
-}
-  else {
-  leftSide.set(0);
-  rightSide.set(0);
- }
  
     
   }
@@ -192,7 +192,7 @@ try (MjpegServer mjpegServer2 = new MjpegServer("serve_Blur", 1182)) {
    leftFrontMotor.setNeutralMode(NeutralMode.Brake);
    rightFrontMotor.setNeutralMode(NeutralMode.Brake);
    leftRearMotor.setNeutralMode(NeutralMode.Brake);
-  rightRearMotor.setNeutralMode(NeutralMode.Brake);
+   rightRearMotor.setNeutralMode(NeutralMode.Brake);
 
 
 
@@ -226,13 +226,10 @@ try (MjpegServer mjpegServer2 = new MjpegServer("serve_Blur", 1182)) {
 
     if (joy1.getRawButtonPressed(6)) {
       Comp.disable();
-    } 
-    else if (joy1.getRawButtonPressed(5)) {
-    Comp.enableDigital();
-    }
-
-    else {
- 
+    } else if (joy1.getRawButtonPressed(5)) {
+      Comp.enableDigital();
+    } else {
+      //nothing
     }
     
     if (joy2.getRawButtonPressed(1)) {
@@ -247,16 +244,15 @@ try (MjpegServer mjpegServer2 = new MjpegServer("serve_Blur", 1182)) {
 
     if(joy1.getRawButtonPressed(2)){
       leftFrontMotor.setNeutralMode(NeutralMode.Brake);
-   rightFrontMotor.setNeutralMode(NeutralMode.Brake);
-   leftRearMotor.setNeutralMode(NeutralMode.Brake);
-  rightRearMotor.setNeutralMode(NeutralMode.Brake);
+      rightFrontMotor.setNeutralMode(NeutralMode.Brake);
+      leftRearMotor.setNeutralMode(NeutralMode.Brake);
+      rightRearMotor.setNeutralMode(NeutralMode.Brake);
+    }else{
+      leftFrontMotor.configFactoryDefault();
+      rightFrontMotor.configFactoryDefault();
+      leftRearMotor.configFactoryDefault();
+      rightRearMotor.configFactoryDefault();
     }
-else{
-  leftFrontMotor.configFactoryDefault();
-   rightFrontMotor.configFactoryDefault();
-   leftRearMotor.configFactoryDefault();
-   rightRearMotor.configFactoryDefault();
-}
     /* 
     armStateMachine.periodic();
 
